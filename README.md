@@ -1,70 +1,106 @@
-# Getting Started with Create React App
+# 🚀 Kubernetes Cluster Deployment with CI/CD
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Project Description
 
-## Available Scripts
+This project involves setting up a local Kubernetes cluster using **Minikube** and deploying a **Node.js application** using Docker and Kubernetes. The steps include:
 
-In the project directory, you can run:
+- Building Docker images
+- Pushing them to Docker Hub
+- Deploying the application on Kubernetes using YAML files
+- (Optional) Setting up Jenkins for CI/CD — planned but not implemented in this version
 
-### `npm start`
+The aim is to demonstrate how containerized applications can be deployed and managed using Docker and Kubernetes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Technologies Used
 
-### `npm test`
+- **Docker** – For building, tagging, and pushing images
+- **Kubernetes** – For container orchestration
+- **Minikube** – Local Kubernetes cluster
+- **kubectl** – Kubernetes CLI
+- **Docker Hub** – Image repository
+- **Git** – Version control
+- **YAML** – Defining Kubernetes resources
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📥 Setup Instructions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### ✅ Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Make sure you have the following installed:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Docker
+- Minikube
+- kubectl
+- Docker Hub account
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### ▶️ Steps to Run Locally
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/mrunalini12/Kubernetes-cluster.git
+    cd Kubernetes-cluster
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Build the Docker image**:
+    ```bash
+    docker build -t my-node-app:v1 .
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. **Tag and push the image to Docker Hub**:
+    ```bash
+    docker tag my-node-app:v1 mrunalini01/my-node-app:v1
+    docker push mrunalini01/my-node-app:v1
+    ```
 
-## Learn More
+4. **Start Minikube**:
+    ```bash
+    minikube start
+    ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. **Deploy to Kubernetes**:
+    ```bash
+    kubectl apply -f node-app-deployment.yaml
+    kubectl apply -f my-node-app-service.yaml
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+6. **Access the app**:  
+    Use the `NodePort` service URL to access the app in your browser:
+    ```bash
+    minikube service my-node-app-service
+    ```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📝 Notes
 
-### Analyzing the Bundle Size
+- **Jenkins Setup**: Jenkins pipeline and deployment YAML were present but not used in this project.
+- **CI/CD**: Manual Docker and Kubernetes deployment were followed instead of Jenkins-based automation.
+- **Scalability**: Auto-scaling and Helm were not used but can be explored as future enhancements.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 📄 Files Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `Dockerfile` – Defines the image structure
+- `node-app-deployment.yaml` – Deploys the Node.js app in Kubernetes
+- `my-node-app-service.yaml` – Exposes the application via a NodePort
+- `Jenkinsfile` *(optional)* – Contains CI/CD stages (not used)
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🔮 Future Improvements
 
-### Deployment
+- Implement CI/CD using Jenkins or GitHub Actions
+- Add Kubernetes auto-scaling
+- Use Helm charts for managing deployments
+- Secure image access using Kubernetes Secrets
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
+ *Maintained with love by Mrunalini.*  
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
